@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Study Time Tracker</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Study Time Tracker 📊</h1>
+
+<form method="POST">
+
+{% for day in days %}
+
+<p>{{ day }}</p>
+
+<input type="number" step="any" name="{{day}}" required>
+
+<br><br>
+
+{% endfor %}
+
+<button type="submit">Generate Chart</button>
+
+</form>
+
+<canvas id="chart"></canvas>
+
+</div>
+
+<script>
+
+let hours = {{ hours | safe }};
+let days = {{ days | safe }};
+
+if(hours.length > 0){
+
+new Chart(document.getElementById("chart"),{
+
+type:"bar",
+
+data:{
+labels:days,
+datasets:[{
+label:"Study Hours",
+data:hours
+}]
+}
+
+});
+
+}
+
+</script>
+
+</body>
+</html>
